@@ -1,0 +1,28 @@
+{
+  "name": "content-gap-intelligence",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Content Gap Intelligence v0 — automated content-gap detection with exact-evidence verification",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "db:up": "docker compose up -d db",
+    "db:down": "docker compose down",
+    "db:migrate": "pnpm --filter @cgi/database migrate",
+    "db:seed": "pnpm --filter @cgi/database seed",
+    "demo": "pnpm --filter @cgi/worker demo"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8",
+    "tsx": "^4.19.2"
+  }
+}

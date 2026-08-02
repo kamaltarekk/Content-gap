@@ -1,0 +1,24 @@
+# Local infrastructure for Content Gap Intelligence v0.
+# Only PostgreSQL (with pgvector) is required — pg-boss uses the same database
+# for jobs and scheduling, so there is no Redis or separate vector service.
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: cgi-db
+    environment:
+      POSTGRES_USER: cgi
+      POSTGRES_PASSWORD: cgi
+      POSTGRES_DB: cgi
+    ports:
+      # Host 5433 -> container 5432 to avoid clashing with a local postgres.
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cgi -d cgi"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  pgdata:

@@ -1,0 +1,30 @@
+{
+  "name": "@cgi/worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "start": "node dist/main.js",
+    "build": "tsup src/main.ts --format esm --platform node --target node22 --no-splitting --clean --out-dir dist",
+    "typecheck": "tsc --noEmit",
+    "demo": "tsx src/demo.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@cgi/analysis-engine": "workspace:*",
+    "@cgi/crawler": "workspace:*",
+    "@cgi/database": "workspace:*",
+    "@cgi/llm": "workspace:*",
+    "@cgi/shared": "workspace:*",
+    "drizzle-orm": "^0.38.3",
+    "pg-boss": "^10.1.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@cgi/analysis-engine",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@cgi/crawler": "workspace:*",
+    "@cgi/database": "workspace:*",
+    "@cgi/llm": "workspace:*",
+    "@cgi/shared": "workspace:*",
+    "drizzle-orm": "^0.38.3",
+    "pino": "^9.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
