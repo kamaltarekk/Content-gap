@@ -1,4 +1,7 @@
-import { defineBackground } from "wxt/client";
+// `defineBackground` is a WXT auto-import (injected at build by the unimport plugin). Importing
+// it explicitly from "wxt/client" makes vite-node externalize a virtual module and fail on Node's
+// ESM loader, so we rely on the auto-import and declare its type locally (erased at build).
+declare function defineBackground(main: () => void | Promise<void>): void;
 import type {
   ApiFetchResult,
   BgRequest,

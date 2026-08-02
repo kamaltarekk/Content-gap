@@ -16,10 +16,14 @@ import {
 // Seeds the synthetic demo project as raw sources + snapshots. The pipeline (worker/api) then
 // ingests and analyzes them. Idempotent: removes an existing demo project of the same name first.
 
-export async function seedDemo(db = getDb()): Promise<{ projectId: string; token: string; tokenId: string }> {
+export async function seedDemo(
+  db = getDb(),
+  opts: { projectName?: string } = {},
+): Promise<{ projectId: string; token: string; tokenId: string }> {
   const d = demoDataset;
+  const projectName = opts.projectName ?? d.project.name;
 
-  const existing = await db.select({ id: projects.id }).from(projects).where(eq(projects.name, d.project.name));
+  const existing = await db.select({ id: projects.id }).from(projects).where(eq(projects.name, projectName));
   for (const p of existing) {
     await db.delete(projects).where(eq(projects.id, p.id)); // cascades
   }
@@ -27,7 +31,7 @@ export async function seedDemo(db = getDb()): Promise<{ projectId: string; token
   const [project] = await db
     .insert(projects)
     .values({
-      name: d.project.name,
+      name: projectName,
       primaryDomain: d.project.primaryDomain,
       defaultLanguage: d.project.defaultLanguage,
       refreshSchedule: d.project.refreshSchedule,

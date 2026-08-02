@@ -34,7 +34,7 @@ afterAll(async () => {
 describe("full fake-LLM pipeline on the demo dataset", () => {
   it("produces <=10 verified, evidence-backed, bilingual gaps and ignores injection", async () => {
     if (!dbAvailable) return;
-    const { projectId } = await seedDemo(db);
+    const { projectId } = await seedDemo(db, { projectName: "Demo-engine" });
     const llm = createLlmProvider();
     const embed = createEmbeddingProvider();
     const res = await runPipeline(projectId, "TEST", { db, llm, embed, referenceDate: "2026-08-02" });
@@ -75,7 +75,7 @@ describe("full fake-LLM pipeline on the demo dataset", () => {
 
   it("does not reprocess unchanged content and targets changed content", async () => {
     if (!dbAvailable) return;
-    const { projectId } = await seedDemo(db);
+    const { projectId } = await seedDemo(db, { projectName: "Demo-engine" });
     const llm = createLlmProvider();
     const embed = createEmbeddingProvider();
     await runPipeline(projectId, "TEST", { db, llm, embed, referenceDate: "2026-08-02" });
@@ -100,7 +100,7 @@ describe("full fake-LLM pipeline on the demo dataset", () => {
 
   it("ingestContent is hash-gated (idempotent) for identical content", async () => {
     if (!dbAvailable) return;
-    const { projectId } = await seedDemo(db);
+    const { projectId } = await seedDemo(db, { projectName: "Demo-engine" });
     const text = "Some owned page content.";
     const first = await ingestContent(db, { projectId, ownerType: "OWNED", competitorSlot: null, sourceType: "URL", name: "p", url: "https://x.example/p", title: "p", text, crawlMethod: "HTTP" });
     expect(first.changed).toBe(true);

@@ -12,7 +12,7 @@ const config = loadConfig();
 beforeAll(async () => {
   try {
     await runMigrations();
-    projectId = (await seedDemo(db)).projectId;
+    projectId = (await seedDemo(db, { projectName: "Demo-worker" })).projectId;
   } catch {
     dbAvailable = false;
   }
@@ -22,11 +22,12 @@ afterAll(async () => {
 });
 
 async function currentTextByUrl(url: string): Promise<string> {
+  // Scope to THIS project — the demo uses identical canonical URLs across parallel test projects.
   const [row] = await db
     .select({ text: sourceSnapshots.normalizedContent })
     .from(sourceSnapshots)
     .innerJoin(sources, eq(sourceSnapshots.sourceId, sources.id))
-    .where(and(eq(sources.canonicalUrl, url), eq(sourceSnapshots.isCurrent, true)))
+    .where(and(eq(sources.projectId, projectId), eq(sources.canonicalUrl, url), eq(sourceSnapshots.isCurrent, true)))
     .limit(1);
   return row?.text ?? "";
 }

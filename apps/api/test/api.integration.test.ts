@@ -14,7 +14,7 @@ beforeAll(async () => {
   process.env.LLM_PROVIDER = "fake";
   try {
     await runMigrations();
-    const seeded = await seedDemo(getDb());
+    const seeded = await seedDemo(getDb(), { projectName: "Demo-api" });
     projectId = seeded.projectId;
     token = seeded.token;
   } catch {
