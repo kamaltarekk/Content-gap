@@ -46,6 +46,10 @@ class Settings(BaseSettings):
     max_file_bytes: int = 25 * 1024 * 1024
     max_manual_text_chars: int = 10_000
 
+    # Language-bank thresholds (spec §10.13). Configuration, not hard-coded across methodologies.
+    voc_high_confidence_min_phrases: int = 10
+    voc_pattern_confirm_min: int = 3
+
     # AI provider. "fake" = deterministic offline; "anthropic" = real SDK.
     ai_provider: str = "anthropic"
     anthropic_api_key: str = ""

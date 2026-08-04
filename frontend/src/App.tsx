@@ -5,6 +5,7 @@ import Content from "./pages/Content";
 import Jobs from "./pages/Jobs";
 import Review from "./pages/Review";
 import Setup from "./pages/Setup";
+import Voc from "./pages/Voc";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ export default function App() {
           <Link to="/content">Content</Link>
           <Link to="/jobs">Jobs</Link>
           <Link to="/review">Review</Link>
+          <Link to="/voc">VoC</Link>
         </nav>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -53,6 +55,7 @@ export default function App() {
           <Route path="/content" element={<Content />} />
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/review" element={<Review />} />
+          <Route path="/voc" element={<Voc />} />
         </Routes>
       </Router>
     </QueryClientProvider>

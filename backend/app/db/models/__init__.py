@@ -10,10 +10,13 @@ from app.db.models.job import Job, JobEvent
 from app.db.models.project import Project
 from app.db.models.source import Source, SourceSnapshot
 from app.db.models.user import User
+from app.db.models.voc import Claim, ClaimEvidence, PerformanceRecord, VocEntry
 
 __all__ = [
     "AuditLog",
     "BuyingGroupRole",
+    "Claim",
+    "ClaimEvidence",
     "ContentClassification",
     "ContentPiece",
     "DiagnosticContextVersion",
@@ -21,8 +24,10 @@ __all__ = [
     "EvidenceSpan",
     "Job",
     "JobEvent",
+    "PerformanceRecord",
     "Project",
     "Source",
     "SourceSnapshot",
     "User",
+    "VocEntry",
 ]

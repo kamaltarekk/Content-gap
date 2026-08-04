@@ -17,6 +17,7 @@ from app.api import (
     meta,
     projects,
     sources,
+    voc,
 )
 from app.auth import router as auth_router
 from app.core.config import Settings, get_settings
@@ -61,6 +62,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(sources.router)
     app.include_router(jobs.router)
     app.include_router(classification.router)
+    app.include_router(voc.router)
     return app
 
 
