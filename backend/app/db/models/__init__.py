@@ -13,6 +13,7 @@ from app.db.models.competitor import (
 from app.db.models.content_piece import ContentPiece, EvidenceSpan
 from app.db.models.context import DiagnosticContextVersion
 from app.db.models.entity import Entity
+from app.db.models.gap import CoverageCell, Gap, GapAnalysisRun
 from app.db.models.job import Job, JobEvent
 from app.db.models.project import Project
 from app.db.models.source import Source, SourceSnapshot
@@ -33,9 +34,12 @@ __all__ = [
     "CompetitorFinding",
     "ContentClassification",
     "ContentPiece",
+    "CoverageCell",
     "DiagnosticContextVersion",
     "Entity",
     "EvidenceSpan",
+    "Gap",
+    "GapAnalysisRun",
     "Job",
     "JobEvent",
     "PerformanceRecord",
