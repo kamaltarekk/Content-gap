@@ -392,6 +392,49 @@ class AnalysisType(BaseStrEnum):
     full_diagnosis = "full_diagnosis"
 
 
+class ReadinessDimension(BaseStrEnum):
+    expert_author_availability = "expert_author_availability"
+    evidence_availability = "evidence_availability"
+    story_inventory = "story_inventory"
+    product_knowledge = "product_knowledge"
+    voc_availability = "voc_availability"
+    production_capacity_realism = "production_capacity_realism"
+    claim_governance = "claim_governance"
+    measurement_readiness = "measurement_readiness"
+
+
+class ReadinessGrade(BaseStrEnum):
+    a = "a"
+    b = "b"
+    c = "c"
+    d = "d"
+
+
+class BrandDiagnosisDimension(BaseStrEnum):
+    readiness = "readiness"
+    decision_alignment = "decision_alignment"
+    journey_coverage = "journey_coverage"
+    voc_alignment = "voc_alignment"
+    sales_element = "sales_element"
+    claim_proof = "claim_proof"
+    performance_evidence = "performance_evidence"
+    non_content_blocker = "non_content_blocker"
+
+
+class DecisionAlignmentLabel(BaseStrEnum):
+    aligned = "aligned"
+    not_aligned_with_current_decision = "not_aligned_with_current_decision"
+
+
+class PerformanceSignalType(BaseStrEnum):
+    attention = "attention"
+    desire = "desire"
+    persuasion = "persuasion"
+    friction_reduction = "friction_reduction"
+    direct_commercial_outcome = "direct_commercial_outcome"
+    visible_public_proxy = "visible_public_proxy"
+
+
 # Registry keyed by the canonical enum name used in enums.json. The parity test iterates this.
 ENUM_REGISTRY: dict[str, type[BaseStrEnum]] = {
     "finding_status": FindingStatus,
@@ -425,4 +468,9 @@ ENUM_REGISTRY: dict[str, type[BaseStrEnum]] = {
     "bank_type": BankType,
     "paid_organic_status": PaidOrganicStatus,
     "analysis_type": AnalysisType,
+    "readiness_dimension": ReadinessDimension,
+    "readiness_grade": ReadinessGrade,
+    "brand_diagnosis_dimension": BrandDiagnosisDimension,
+    "decision_alignment_label": DecisionAlignmentLabel,
+    "performance_signal_type": PerformanceSignalType,
 }

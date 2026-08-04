@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { Link, Route, HashRouter as Router, Routes } from "react-router-dom";
 import { apiGet } from "./api/client";
+import BrandDiagnosis from "./pages/BrandDiagnosis";
 import Content from "./pages/Content";
 import Jobs from "./pages/Jobs";
 import Review from "./pages/Review";
@@ -48,6 +49,7 @@ export default function App() {
           <Link to="/jobs">Jobs</Link>
           <Link to="/review">Review</Link>
           <Link to="/voc">VoC</Link>
+          <Link to="/brand-diagnosis">Brand Dx</Link>
         </nav>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -56,6 +58,7 @@ export default function App() {
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/review" element={<Review />} />
           <Route path="/voc" element={<Voc />} />
+          <Route path="/brand-diagnosis" element={<BrandDiagnosis />} />
         </Routes>
       </Router>
     </QueryClientProvider>

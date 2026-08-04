@@ -32,6 +32,11 @@
     "extraction_quality": ["complete", "partial", "low_quality", "unreadable", "blocked", "unknown"],
     "bank_type": ["trigger", "objection", "motivation", "satisfaction", "complaint", "switching_reason", "question"],
     "paid_organic_status": ["paid", "organic", "mixed", "unknown"],
-    "analysis_type": ["brand_diagnosis", "competitor_diagnosis", "comparative_gap_analysis", "full_diagnosis"]
+    "analysis_type": ["brand_diagnosis", "competitor_diagnosis", "comparative_gap_analysis", "full_diagnosis"],
+    "readiness_dimension": ["expert_author_availability", "evidence_availability", "story_inventory", "product_knowledge", "voc_availability", "production_capacity_realism", "claim_governance", "measurement_readiness"],
+    "readiness_grade": ["a", "b", "c", "d"],
+    "brand_diagnosis_dimension": ["readiness", "decision_alignment", "journey_coverage", "voc_alignment", "sales_element", "claim_proof", "performance_evidence", "non_content_blocker"],
+    "decision_alignment_label": ["aligned", "not_aligned_with_current_decision"],
+    "performance_signal_type": ["attention", "desire", "persuasion", "friction_reduction", "direct_commercial_outcome", "visible_public_proxy"]
   }
 }

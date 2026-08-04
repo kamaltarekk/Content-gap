@@ -95,6 +95,21 @@ export type PaidOrganicStatus = (typeof PAID_ORGANIC_STATUS)[number];
 export const ANALYSIS_TYPE = ["brand_diagnosis", "competitor_diagnosis", "comparative_gap_analysis", "full_diagnosis"] as const;
 export type AnalysisType = (typeof ANALYSIS_TYPE)[number];
 
+export const READINESS_DIMENSION = ["expert_author_availability", "evidence_availability", "story_inventory", "product_knowledge", "voc_availability", "production_capacity_realism", "claim_governance", "measurement_readiness"] as const;
+export type ReadinessDimension = (typeof READINESS_DIMENSION)[number];
+
+export const READINESS_GRADE = ["a", "b", "c", "d"] as const;
+export type ReadinessGrade = (typeof READINESS_GRADE)[number];
+
+export const BRAND_DIAGNOSIS_DIMENSION = ["readiness", "decision_alignment", "journey_coverage", "voc_alignment", "sales_element", "claim_proof", "performance_evidence", "non_content_blocker"] as const;
+export type BrandDiagnosisDimension = (typeof BRAND_DIAGNOSIS_DIMENSION)[number];
+
+export const DECISION_ALIGNMENT_LABEL = ["aligned", "not_aligned_with_current_decision"] as const;
+export type DecisionAlignmentLabel = (typeof DECISION_ALIGNMENT_LABEL)[number];
+
+export const PERFORMANCE_SIGNAL_TYPE = ["attention", "desire", "persuasion", "friction_reduction", "direct_commercial_outcome", "visible_public_proxy"] as const;
+export type PerformanceSignalType = (typeof PERFORMANCE_SIGNAL_TYPE)[number];
+
 // Registry keyed by the canonical enum name used in enums.json. The parity test iterates this.
 export const ENUM_REGISTRY: Record<string, readonly string[]> = {
   finding_status: FINDING_STATUS,
@@ -128,4 +143,9 @@ export const ENUM_REGISTRY: Record<string, readonly string[]> = {
   bank_type: BANK_TYPE,
   paid_organic_status: PAID_ORGANIC_STATUS,
   analysis_type: ANALYSIS_TYPE,
+  readiness_dimension: READINESS_DIMENSION,
+  readiness_grade: READINESS_GRADE,
+  brand_diagnosis_dimension: BRAND_DIAGNOSIS_DIMENSION,
+  decision_alignment_label: DECISION_ALIGNMENT_LABEL,
+  performance_signal_type: PERFORMANCE_SIGNAL_TYPE,
 };

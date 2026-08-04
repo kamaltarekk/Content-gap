@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
 from app.api import (
+    brand_diagnosis,
     buying_group,
     classification,
     context,
@@ -63,6 +64,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(jobs.router)
     app.include_router(classification.router)
     app.include_router(voc.router)
+    app.include_router(brand_diagnosis.router)
     return app
 
 

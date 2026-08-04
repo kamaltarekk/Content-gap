@@ -1,6 +1,7 @@
 """Import all models so their tables register on Base.metadata (Alembic + tests)."""
 
 from app.db.models.audit import AuditLog
+from app.db.models.brand_diagnosis import BrandDiagnosis, BrandFinding, BrandReadinessScore
 from app.db.models.buying_group import BuyingGroupRole
 from app.db.models.classification import ContentClassification
 from app.db.models.content_piece import ContentPiece, EvidenceSpan
@@ -14,6 +15,9 @@ from app.db.models.voc import Claim, ClaimEvidence, PerformanceRecord, VocEntry
 
 __all__ = [
     "AuditLog",
+    "BrandDiagnosis",
+    "BrandFinding",
+    "BrandReadinessScore",
     "BuyingGroupRole",
     "Claim",
     "ClaimEvidence",
