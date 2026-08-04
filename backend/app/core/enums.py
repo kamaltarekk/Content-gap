@@ -435,6 +435,25 @@ class PerformanceSignalType(BaseStrEnum):
     visible_public_proxy = "visible_public_proxy"
 
 
+class CollectionStatus(BaseStrEnum):
+    complete = "complete"
+    partial = "partial"
+    empty = "empty"
+
+
+class CollectionItemStatus(BaseStrEnum):
+    collected = "collected"
+    blocked = "blocked"
+    failed = "failed"
+    skipped = "skipped"
+
+
+class SamplePresence(BaseStrEnum):
+    found = "found"
+    not_found_in_sample = "not_found_in_sample"
+    unknown = "unknown"
+
+
 # Registry keyed by the canonical enum name used in enums.json. The parity test iterates this.
 ENUM_REGISTRY: dict[str, type[BaseStrEnum]] = {
     "finding_status": FindingStatus,
@@ -473,4 +492,7 @@ ENUM_REGISTRY: dict[str, type[BaseStrEnum]] = {
     "brand_diagnosis_dimension": BrandDiagnosisDimension,
     "decision_alignment_label": DecisionAlignmentLabel,
     "performance_signal_type": PerformanceSignalType,
+    "collection_status": CollectionStatus,
+    "collection_item_status": CollectionItemStatus,
+    "sample_presence": SamplePresence,
 }

@@ -110,6 +110,15 @@ export type DecisionAlignmentLabel = (typeof DECISION_ALIGNMENT_LABEL)[number];
 export const PERFORMANCE_SIGNAL_TYPE = ["attention", "desire", "persuasion", "friction_reduction", "direct_commercial_outcome", "visible_public_proxy"] as const;
 export type PerformanceSignalType = (typeof PERFORMANCE_SIGNAL_TYPE)[number];
 
+export const COLLECTION_STATUS = ["complete", "partial", "empty"] as const;
+export type CollectionStatus = (typeof COLLECTION_STATUS)[number];
+
+export const COLLECTION_ITEM_STATUS = ["collected", "blocked", "failed", "skipped"] as const;
+export type CollectionItemStatus = (typeof COLLECTION_ITEM_STATUS)[number];
+
+export const SAMPLE_PRESENCE = ["found", "not_found_in_sample", "unknown"] as const;
+export type SamplePresence = (typeof SAMPLE_PRESENCE)[number];
+
 // Registry keyed by the canonical enum name used in enums.json. The parity test iterates this.
 export const ENUM_REGISTRY: Record<string, readonly string[]> = {
   finding_status: FINDING_STATUS,
@@ -148,4 +157,7 @@ export const ENUM_REGISTRY: Record<string, readonly string[]> = {
   brand_diagnosis_dimension: BRAND_DIAGNOSIS_DIMENSION,
   decision_alignment_label: DECISION_ALIGNMENT_LABEL,
   performance_signal_type: PERFORMANCE_SIGNAL_TYPE,
+  collection_status: COLLECTION_STATUS,
+  collection_item_status: COLLECTION_ITEM_STATUS,
+  sample_presence: SAMPLE_PRESENCE,
 };

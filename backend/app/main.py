@@ -11,6 +11,7 @@ from app.api import (
     brand_diagnosis,
     buying_group,
     classification,
+    competitor,
     context,
     entities,
     health,
@@ -65,6 +66,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(classification.router)
     app.include_router(voc.router)
     app.include_router(brand_diagnosis.router)
+    app.include_router(competitor.router)
     return app
 
 

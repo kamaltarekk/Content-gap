@@ -4,7 +4,7 @@ import uuid
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field, model_validator
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -80,6 +80,17 @@ async def create_entity(
 ) -> EntityOut:
     if await session.get(Project, project_id) is None:
         raise HTTPException(status_code=404, detail="project_not_found")
+    if body.entity_type == EntityType.competitor:
+        # Up to three competitors per analysis run (spec §5.2, acceptance criterion 1).
+        existing = (
+            await session.execute(
+                select(func.count())
+                .select_from(Entity)
+                .where(Entity.project_id == project_id, Entity.entity_type == "competitor")
+            )
+        ).scalar_one()
+        if existing >= 3:
+            raise HTTPException(status_code=409, detail="max_three_competitors")
     e = Entity(
         project_id=project_id,
         entity_type=body.entity_type.value,

@@ -4,6 +4,12 @@ from app.db.models.audit import AuditLog
 from app.db.models.brand_diagnosis import BrandDiagnosis, BrandFinding, BrandReadinessScore
 from app.db.models.buying_group import BuyingGroupRole
 from app.db.models.classification import ContentClassification
+from app.db.models.competitor import (
+    CompetitorCollection,
+    CompetitorCollectionItem,
+    CompetitorDiagnosis,
+    CompetitorFinding,
+)
 from app.db.models.content_piece import ContentPiece, EvidenceSpan
 from app.db.models.context import DiagnosticContextVersion
 from app.db.models.entity import Entity
@@ -21,6 +27,10 @@ __all__ = [
     "BuyingGroupRole",
     "Claim",
     "ClaimEvidence",
+    "CompetitorCollection",
+    "CompetitorCollectionItem",
+    "CompetitorDiagnosis",
+    "CompetitorFinding",
     "ContentClassification",
     "ContentPiece",
     "DiagnosticContextVersion",

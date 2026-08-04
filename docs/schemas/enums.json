@@ -37,6 +37,9 @@
     "readiness_grade": ["a", "b", "c", "d"],
     "brand_diagnosis_dimension": ["readiness", "decision_alignment", "journey_coverage", "voc_alignment", "sales_element", "claim_proof", "performance_evidence", "non_content_blocker"],
     "decision_alignment_label": ["aligned", "not_aligned_with_current_decision"],
-    "performance_signal_type": ["attention", "desire", "persuasion", "friction_reduction", "direct_commercial_outcome", "visible_public_proxy"]
+    "performance_signal_type": ["attention", "desire", "persuasion", "friction_reduction", "direct_commercial_outcome", "visible_public_proxy"],
+    "collection_status": ["complete", "partial", "empty"],
+    "collection_item_status": ["collected", "blocked", "failed", "skipped"],
+    "sample_presence": ["found", "not_found_in_sample", "unknown"]
   }
 }
