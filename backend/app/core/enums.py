@@ -7,14 +7,11 @@ Do not invent variants. Strings are exact per Section 7 of the build spec.
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 
 
-class BaseStrEnum(str, Enum):
+class BaseStrEnum(StrEnum):
     """String enum whose ``value`` is the canonical wire string."""
-
-    def __str__(self) -> str:  # pragma: no cover - convenience
-        return self.value
 
     @classmethod
     def values(cls) -> list[str]:

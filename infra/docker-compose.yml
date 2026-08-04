@@ -1,0 +1,102 @@
+# Full local stack. Canonical path: `docker compose -f infra/docker-compose.yml up`.
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: cdga
+      POSTGRES_PASSWORD: cdga
+      POSTGRES_DB: cdga
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cdga -d cdga"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - miniodata:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  createbuckets:
+    image: minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set local http://minio:9000 minioadmin minioadmin &&
+      mc mb -p local/cdga || true"
+
+  backend:
+    build: ../backend
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    environment:
+      ENVIRONMENT: local
+      AUTH_MODE: none
+      DATABASE_URL: postgresql+asyncpg://cdga:cdga@db:5432/cdga
+      REDIS_URL: redis://redis:6379/0
+      STORAGE_ENDPOINT: minio:9000
+      ANTHROPIC_MODEL: claude-sonnet-5
+      CORS_ORIGINS: '["http://localhost:5173"]'
+    command: >
+      /bin/sh -c "python -m alembic upgrade head &&
+      uvicorn app.main:app --host 0.0.0.0 --port 3001"
+    ports:
+      - "3001:3001"
+
+  worker:
+    build: ../backend
+    depends_on:
+      - backend
+    environment:
+      DATABASE_URL: postgresql+asyncpg://cdga:cdga@db:5432/cdga
+      REDIS_URL: redis://redis:6379/0
+      STORAGE_ENDPOINT: minio:9000
+      ANTHROPIC_MODEL: claude-sonnet-5
+    # Celery worker is wired in Phase 4; kept here so the topology is visible.
+    command: ["/bin/sh", "-c", "echo 'worker placeholder until Phase 4' && sleep infinity"]
+
+  frontend:
+    build: ../frontend
+    depends_on:
+      - backend
+    environment:
+      VITE_API_BASE: http://localhost:3001
+    ports:
+      - "5173:5173"
+
+volumes:
+  pgdata:
+  miniodata:

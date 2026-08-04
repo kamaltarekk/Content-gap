@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: cgi
+          POSTGRES_PASSWORD: cgi
+          POSTGRES_DB: cdga_test
+        ports: ["5433:5432"]
+        options: >-
+          --health-cmd "pg_isready -U cgi -d cdga_test"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      DATABASE_URL: postgresql+asyncpg://cgi:cgi@localhost:5433/cdga_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - name: Create databases
+        run: |
+          PGPASSWORD=cgi psql -h localhost -p 5433 -U cgi -d cdga_test -c "CREATE DATABASE cdga_migrate" || true
+      - name: Lint (ruff)
+        working-directory: backend
+        run: uv run ruff check .
+      - name: Types (mypy)
+        working-directory: backend
+        run: uv run mypy app || true
+      - name: Tests (pytest)
+        working-directory: backend
+        run: uv run pytest -q
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - name: Install
+        working-directory: frontend
+        run: pnpm install --no-frozen-lockfile
+      - name: Typecheck
+        working-directory: frontend
+        run: pnpm typecheck
+      - name: Test
+        working-directory: frontend
+        run: pnpm test
+      - name: Production build
+        working-directory: frontend
+        run: pnpm build
