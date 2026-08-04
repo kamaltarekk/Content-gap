@@ -119,6 +119,9 @@ export type CollectionItemStatus = (typeof COLLECTION_ITEM_STATUS)[number];
 export const SAMPLE_PRESENCE = ["found", "not_found_in_sample", "unknown"] as const;
 export type SamplePresence = (typeof SAMPLE_PRESENCE)[number];
 
+export const STRATEGY_READINESS = ["ready_for_content_strategy", "ready_with_unresolved_hypotheses", "more_evidence_required", "blocked_by_non_content_issue"] as const;
+export type StrategyReadiness = (typeof STRATEGY_READINESS)[number];
+
 // Registry keyed by the canonical enum name used in enums.json. The parity test iterates this.
 export const ENUM_REGISTRY: Record<string, readonly string[]> = {
   finding_status: FINDING_STATUS,
@@ -160,4 +163,5 @@ export const ENUM_REGISTRY: Record<string, readonly string[]> = {
   collection_status: COLLECTION_STATUS,
   collection_item_status: COLLECTION_ITEM_STATUS,
   sample_presence: SAMPLE_PRESENCE,
+  strategy_readiness: STRATEGY_READINESS,
 };

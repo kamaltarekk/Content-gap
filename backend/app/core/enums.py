@@ -454,6 +454,13 @@ class SamplePresence(BaseStrEnum):
     unknown = "unknown"
 
 
+class StrategyReadiness(BaseStrEnum):
+    ready_for_content_strategy = "ready_for_content_strategy"
+    ready_with_unresolved_hypotheses = "ready_with_unresolved_hypotheses"
+    more_evidence_required = "more_evidence_required"
+    blocked_by_non_content_issue = "blocked_by_non_content_issue"
+
+
 # Registry keyed by the canonical enum name used in enums.json. The parity test iterates this.
 ENUM_REGISTRY: dict[str, type[BaseStrEnum]] = {
     "finding_status": FindingStatus,
@@ -495,4 +502,5 @@ ENUM_REGISTRY: dict[str, type[BaseStrEnum]] = {
     "collection_status": CollectionStatus,
     "collection_item_status": CollectionItemStatus,
     "sample_presence": SamplePresence,
+    "strategy_readiness": StrategyReadiness,
 }

@@ -16,6 +16,7 @@ from app.db.models.entity import Entity
 from app.db.models.gap import CoverageCell, Gap, GapAnalysisRun
 from app.db.models.job import Job, JobEvent
 from app.db.models.project import Project
+from app.db.models.report import Report
 from app.db.models.source import Source, SourceSnapshot
 from app.db.models.user import User
 from app.db.models.voc import Claim, ClaimEvidence, PerformanceRecord, VocEntry
@@ -44,6 +45,7 @@ __all__ = [
     "JobEvent",
     "PerformanceRecord",
     "Project",
+    "Report",
     "Source",
     "SourceSnapshot",
     "User",

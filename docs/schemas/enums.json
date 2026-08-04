@@ -40,6 +40,7 @@
     "performance_signal_type": ["attention", "desire", "persuasion", "friction_reduction", "direct_commercial_outcome", "visible_public_proxy"],
     "collection_status": ["complete", "partial", "empty"],
     "collection_item_status": ["collected", "blocked", "failed", "skipped"],
-    "sample_presence": ["found", "not_found_in_sample", "unknown"]
+    "sample_presence": ["found", "not_found_in_sample", "unknown"],
+    "strategy_readiness": ["ready_for_content_strategy", "ready_with_unresolved_hypotheses", "more_evidence_required", "blocked_by_non_content_issue"]
   }
 }

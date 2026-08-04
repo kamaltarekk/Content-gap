@@ -19,6 +19,7 @@ from app.api import (
     jobs,
     meta,
     projects,
+    report,
     sources,
     voc,
 )
@@ -69,6 +70,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(brand_diagnosis.router)
     app.include_router(competitor.router)
     app.include_router(gap.router)
+    app.include_router(report.router)
     return app
 
 

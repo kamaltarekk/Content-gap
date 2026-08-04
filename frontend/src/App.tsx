@@ -5,6 +5,7 @@ import BrandDiagnosis from "./pages/BrandDiagnosis";
 import CompetitorDiagnosis from "./pages/CompetitorDiagnosis";
 import Content from "./pages/Content";
 import GapExplorer from "./pages/GapExplorer";
+import Report from "./pages/Report";
 import Jobs from "./pages/Jobs";
 import Review from "./pages/Review";
 import Setup from "./pages/Setup";
@@ -54,6 +55,7 @@ export default function App() {
           <Link to="/brand-diagnosis">Brand Dx</Link>
           <Link to="/competitor-diagnosis">Competitor Dx</Link>
           <Link to="/gaps">Gaps</Link>
+          <Link to="/report">Report</Link>
         </nav>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -65,6 +67,7 @@ export default function App() {
           <Route path="/brand-diagnosis" element={<BrandDiagnosis />} />
           <Route path="/competitor-diagnosis" element={<CompetitorDiagnosis />} />
           <Route path="/gaps" element={<GapExplorer />} />
+          <Route path="/report" element={<Report />} />
         </Routes>
       </Router>
     </QueryClientProvider>
