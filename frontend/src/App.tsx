@@ -3,6 +3,7 @@ import { Link, Route, HashRouter as Router, Routes } from "react-router-dom";
 import { apiGet } from "./api/client";
 import Content from "./pages/Content";
 import Jobs from "./pages/Jobs";
+import Review from "./pages/Review";
 import Setup from "./pages/Setup";
 
 const queryClient = new QueryClient();
@@ -44,12 +45,14 @@ export default function App() {
           <Link to="/setup">Setup</Link>
           <Link to="/content">Content</Link>
           <Link to="/jobs">Jobs</Link>
+          <Link to="/review">Review</Link>
         </nav>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/setup" element={<Setup />} />
           <Route path="/content" element={<Content />} />
           <Route path="/jobs" element={<Jobs />} />
+          <Route path="/review" element={<Review />} />
         </Routes>
       </Router>
     </QueryClientProvider>

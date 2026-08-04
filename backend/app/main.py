@@ -7,7 +7,17 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
-from app.api import buying_group, context, entities, health, jobs, meta, projects, sources
+from app.api import (
+    buying_group,
+    classification,
+    context,
+    entities,
+    health,
+    jobs,
+    meta,
+    projects,
+    sources,
+)
 from app.auth import router as auth_router
 from app.core.config import Settings, get_settings
 from app.core.errors import install_error_handlers
@@ -50,6 +60,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(buying_group.router)
     app.include_router(sources.router)
     app.include_router(jobs.router)
+    app.include_router(classification.router)
     return app
 
 

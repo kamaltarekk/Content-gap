@@ -2,6 +2,7 @@
 
 from app.db.models.audit import AuditLog
 from app.db.models.buying_group import BuyingGroupRole
+from app.db.models.classification import ContentClassification
 from app.db.models.content_piece import ContentPiece, EvidenceSpan
 from app.db.models.context import DiagnosticContextVersion
 from app.db.models.entity import Entity
@@ -13,6 +14,7 @@ from app.db.models.user import User
 __all__ = [
     "AuditLog",
     "BuyingGroupRole",
+    "ContentClassification",
     "ContentPiece",
     "DiagnosticContextVersion",
     "Entity",

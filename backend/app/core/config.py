@@ -46,10 +46,14 @@ class Settings(BaseSettings):
     max_file_bytes: int = 25 * 1024 * 1024
     max_manual_text_chars: int = 10_000
 
-    # AI provider — configured, validated, but never called in the foundation phase.
+    # AI provider. "fake" = deterministic offline; "anthropic" = real SDK.
     ai_provider: str = "anthropic"
     anthropic_api_key: str = ""
     anthropic_model: str = "claude-sonnet-5"
+
+    # Provider pricing (USD per 1M tokens). Not hard-coded in logic (spec §10.29); configurable.
+    price_input_per_mtok: float = 3.0
+    price_output_per_mtok: float = 15.0
 
     cors_origins: list[str] = Field(default_factory=lambda: ["http://localhost:5173"])
 

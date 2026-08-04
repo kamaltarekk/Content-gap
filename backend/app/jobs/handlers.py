@@ -19,6 +19,44 @@ _FAULTS = {
 }
 
 
+@register("classify_content")
+async def classify_content_handler(runner: StageRunner, job: Job) -> list[str]:
+    import uuid as _uuid
+
+    from sqlalchemy import select
+
+    from app.ai import get_ai_provider
+    from app.db.models.content_piece import ContentPiece
+    from app.services.classify import classify_piece
+
+    manifest = job.input_manifest or {}
+    project_id = _uuid.UUID(manifest["project_id"])
+    context_version_id = str(manifest.get("context_version_id", ""))
+    provider = get_ai_provider()
+
+    pieces = (
+        (
+            await runner.session.execute(
+                select(ContentPiece).where(
+                    ContentPiece.project_id == project_id,
+                    ContentPiece.include_in_analysis.is_(True),
+                    ContentPiece.is_canonical.is_(True),
+                )
+            )
+        )
+        .scalars()
+        .all()
+    )
+    warnings: list[str] = []
+    total = max(1, len(pieces))
+    for i, piece in enumerate(pieces):
+        await runner.stage(f"classify:{piece.id}", progress=int((i + 1) / total * 100))
+        outcome = await classify_piece(runner.session, provider, piece=piece, context_version_id=context_version_id)
+        if outcome.status == "needs_review":
+            warnings.append(f"needs_review:{piece.id}")
+    return warnings
+
+
 @register("demo")
 async def demo_handler(runner: StageRunner, job: Job) -> list[str]:
     manifest = job.input_manifest or {}
