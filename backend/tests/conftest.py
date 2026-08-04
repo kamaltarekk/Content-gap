@@ -14,6 +14,8 @@ os.environ.update(
         "AI_PROVIDER": "fake",
         "ANTHROPIC_API_KEY": "test-fake-key-not-real",
         "ANTHROPIC_MODEL": "claude-sonnet-5",
+        "STORAGE_BACKEND": "local",
+        "STORAGE_LOCAL_DIR": "/tmp/cdga-test-storage",
     }
 )
 

@@ -42,20 +42,14 @@ async def check_redis(settings: Settings) -> CheckResult:
 
 
 async def check_storage(settings: Settings) -> CheckResult:
-    def _probe() -> None:
-        from minio import Minio
+    def _probe() -> bool:
+        from app.clients.storage import get_storage
 
-        client = Minio(
-            settings.storage_endpoint,
-            access_key=settings.storage_access_key,
-            secret_key=settings.storage_secret_key,
-            secure=settings.storage_secure,
-        )
-        client.bucket_exists(settings.storage_bucket)
+        return get_storage(settings).healthy()
 
     try:
-        await asyncio.wait_for(asyncio.to_thread(_probe), timeout=2.0)
-        return CheckResult("object_storage", True, "ok")
+        ok = await asyncio.wait_for(asyncio.to_thread(_probe), timeout=2.0)
+        return CheckResult("object_storage", ok, "ok" if ok else "unhealthy")
     except Exception as exc:  # noqa: BLE001
         return CheckResult("object_storage", False, type(exc).__name__)
 

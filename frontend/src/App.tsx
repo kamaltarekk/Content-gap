@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { Link, Route, HashRouter as Router, Routes } from "react-router-dom";
 import { apiGet } from "./api/client";
+import Content from "./pages/Content";
 import Setup from "./pages/Setup";
 
 const queryClient = new QueryClient();
@@ -40,10 +41,12 @@ export default function App() {
         <nav style={{ fontFamily: "system-ui", padding: "1rem", display: "flex", gap: "1rem" }}>
           <Link to="/">Home</Link>
           <Link to="/setup">Setup</Link>
+          <Link to="/content">Content</Link>
         </nav>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/setup" element={<Setup />} />
+          <Route path="/content" element={<Content />} />
         </Routes>
       </Router>
     </QueryClientProvider>

@@ -27,6 +27,8 @@ minio-data/
 pgdata/
 redis-data/
 uploads/
+storage-data/
+backend/storage-data/
 
 # OS / editor
 .DS_Store

@@ -31,12 +31,18 @@ class Settings(BaseSettings):
     # Redis
     redis_url: str = "redis://localhost:6379/0"
 
-    # Object storage (S3/MinIO). Foundation uses a readiness check only.
+    # Object storage. "local" writes to STORAGE_LOCAL_DIR (dev/test); "minio" uses S3/MinIO.
+    storage_backend: str = "local"
+    storage_local_dir: str = "./storage-data"
     storage_endpoint: str = "localhost:9000"
     storage_access_key: str = "minioadmin"
     storage_secret_key: str = "minioadmin"
     storage_bucket: str = "cdga"
     storage_secure: bool = False
+
+    # Upload limits (spec §3.3). Configurable.
+    max_file_bytes: int = 25 * 1024 * 1024
+    max_manual_text_chars: int = 10_000
 
     # AI provider — configured, validated, but never called in the foundation phase.
     ai_provider: str = "anthropic"
