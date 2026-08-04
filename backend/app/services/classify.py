@@ -115,4 +115,16 @@ async def classify_piece(
         await session.flush()
         created.append(row.id)
 
+    # Log the paid provider call in the cost ledger (spec §24, §31.4).
+    from app.services import cost_ledger
+
+    await cost_ledger.record_cost(
+        session,
+        project_id=piece.project_id,
+        task="content_piece_classification",
+        model=provider.model,
+        usage=response.usage,
+        cache_hit=False,
+    )
+
     return ClassifyOutcome(piece.id, "classified", created, response.suspicious_instructions)

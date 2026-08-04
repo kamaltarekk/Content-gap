@@ -4,6 +4,7 @@ import { apiGet } from "./api/client";
 import BrandDiagnosis from "./pages/BrandDiagnosis";
 import CompetitorDiagnosis from "./pages/CompetitorDiagnosis";
 import Content from "./pages/Content";
+import CostOps from "./pages/CostOps";
 import GapExplorer from "./pages/GapExplorer";
 import Report from "./pages/Report";
 import Jobs from "./pages/Jobs";
@@ -56,6 +57,7 @@ export default function App() {
           <Link to="/competitor-diagnosis">Competitor Dx</Link>
           <Link to="/gaps">Gaps</Link>
           <Link to="/report">Report</Link>
+          <Link to="/cost-ops">Cost/Ops</Link>
         </nav>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -68,6 +70,7 @@ export default function App() {
           <Route path="/competitor-diagnosis" element={<CompetitorDiagnosis />} />
           <Route path="/gaps" element={<GapExplorer />} />
           <Route path="/report" element={<Report />} />
+          <Route path="/cost-ops" element={<CostOps />} />
         </Routes>
       </Router>
     </QueryClientProvider>

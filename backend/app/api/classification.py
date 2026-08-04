@@ -18,6 +18,7 @@ from app.db.models.user import User
 from app.db.session import get_session
 from app.jobs import service
 from app.jobs.dispatcher import Dispatcher, get_dispatcher
+from app.services import cost_ledger
 
 router = APIRouter(tags=["classification"])
 
@@ -73,6 +74,11 @@ async def run(
     dispatcher: Dispatcher = Depends(dispatcher_dep),
     user: User = Depends(get_current_user),
 ) -> dict:
+    # Budget cap: block paid classification once the project's cap is reached (spec §31.4).
+    try:
+        await cost_ledger.check_budget(session, project_id)
+    except cost_ledger.BudgetExceeded as exc:
+        raise HTTPException(status_code=402, detail=f"budget_cap_exceeded:{exc.spent:.4f}/{exc.cap:.4f}") from exc
     job, created = await service.enqueue_job(
         session,
         project_id=project_id,
