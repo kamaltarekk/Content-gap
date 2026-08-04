@@ -28,8 +28,10 @@ class Settings(BaseSettings):
     # Database — async URL for the app; a sync URL is derived for Alembic.
     database_url: str = "postgresql+asyncpg://cgi:cgi@localhost:5433/cdga"
 
-    # Redis
+    # Redis + job dispatch. "celery" = real broker; "inline" = run in-process (local dev,
+    # no broker); "deferred" = record only (tests drive execute_job directly).
     redis_url: str = "redis://localhost:6379/0"
+    job_dispatch: Literal["celery", "inline", "deferred"] = "inline"
 
     # Object storage. "local" writes to STORAGE_LOCAL_DIR (dev/test); "minio" uses S3/MinIO.
     storage_backend: str = "local"

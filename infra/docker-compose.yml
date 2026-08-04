@@ -68,7 +68,9 @@ services:
       DATABASE_URL: postgresql+asyncpg://cdga:cdga@db:5432/cdga
       REDIS_URL: redis://redis:6379/0
       STORAGE_ENDPOINT: minio:9000
+      STORAGE_BACKEND: minio
       ANTHROPIC_MODEL: claude-sonnet-5
+      JOB_DISPATCH: celery
       CORS_ORIGINS: '["http://localhost:5173"]'
     command: >
       /bin/sh -c "python -m alembic upgrade head &&
@@ -84,9 +86,9 @@ services:
       DATABASE_URL: postgresql+asyncpg://cdga:cdga@db:5432/cdga
       REDIS_URL: redis://redis:6379/0
       STORAGE_ENDPOINT: minio:9000
+      STORAGE_BACKEND: minio
       ANTHROPIC_MODEL: claude-sonnet-5
-    # Celery worker is wired in Phase 4; kept here so the topology is visible.
-    command: ["/bin/sh", "-c", "echo 'worker placeholder until Phase 4' && sleep infinity"]
+    command: ["celery", "-A", "app.workers.celery_app.celery", "worker", "-l", "info"]
 
   frontend:
     build: ../frontend

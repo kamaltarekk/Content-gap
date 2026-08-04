@@ -16,6 +16,7 @@ os.environ.update(
         "ANTHROPIC_MODEL": "claude-sonnet-5",
         "STORAGE_BACKEND": "local",
         "STORAGE_LOCAL_DIR": "/tmp/cdga-test-storage",
+        "JOB_DISPATCH": "deferred",
     }
 )
 
