@@ -3,7 +3,17 @@ from __future__ import annotations
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-SKIP_DIRS = {".git", ".venv", "node_modules", "legacy", "dist", "__pycache__", ".pytest_cache", ".ruff_cache", ".mypy_cache"}
+SKIP_DIRS = {
+    ".git",
+    ".venv",
+    "node_modules",
+    "legacy",
+    "dist",
+    "__pycache__",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".mypy_cache",
+}
 
 
 def _source_files() -> list[Path]:
@@ -13,7 +23,19 @@ def _source_files() -> list[Path]:
             continue
         if any(part in SKIP_DIRS for part in path.parts):
             continue
-        if path.suffix in {".py", ".ts", ".tsx", ".json", ".md", ".yml", ".yaml", ".toml", ".env", ".example", ".ini"} or path.name.startswith(".env"):
+        if path.suffix in {
+            ".py",
+            ".ts",
+            ".tsx",
+            ".json",
+            ".md",
+            ".yml",
+            ".yaml",
+            ".toml",
+            ".env",
+            ".example",
+            ".ini",
+        } or path.name.startswith(".env"):
             files.append(path)
     return files
 
@@ -37,7 +59,9 @@ def test_env_example_has_blank_secret() -> None:
     assert example.exists(), ".env.example must exist"
     for line in example.read_text(encoding="utf-8").splitlines():
         if line.strip().startswith("ANTHROPIC_API_KEY"):
-            assert line.strip() in ("ANTHROPIC_API_KEY=", "ANTHROPIC_API_KEY= "), "API key must be blank in .env.example"
+            assert line.strip() in ("ANTHROPIC_API_KEY=", "ANTHROPIC_API_KEY= "), (
+                "API key must be blank in .env.example"
+            )
 
 
 def test_env_not_tracked_by_git() -> None:

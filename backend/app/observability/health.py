@@ -61,7 +61,5 @@ async def check_storage(settings: Settings) -> CheckResult:
 
 
 async def readiness(settings: Settings) -> tuple[bool, list[CheckResult]]:
-    results = await asyncio.gather(
-        check_database(), check_redis(settings), check_storage(settings)
-    )
+    results = await asyncio.gather(check_database(), check_redis(settings), check_storage(settings))
     return all(r.ok for r in results), list(results)

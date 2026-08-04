@@ -25,12 +25,8 @@ def install_error_handlers(app: FastAPI) -> None:
 
     @app.exception_handler(RequestValidationError)
     async def _validation(request: Request, exc: RequestValidationError) -> JSONResponse:
-        fields = sorted(
-            {".".join(str(p) for p in e.get("loc", []) if p != "body") for e in exc.errors()}
-        )
-        body = _envelope(
-            "VALIDATION_ERROR", "Request validation failed.", {"fields": fields}, str(uuid.uuid4())
-        )
+        fields = sorted({".".join(str(p) for p in e.get("loc", []) if p != "body") for e in exc.errors()})
+        body = _envelope("VALIDATION_ERROR", "Request validation failed.", {"fields": fields}, str(uuid.uuid4()))
         return JSONResponse(status_code=422, content=body)
 
     @app.exception_handler(Exception)

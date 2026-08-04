@@ -80,6 +80,18 @@ async def client() -> AsyncIterator[AsyncClient]:
             yield ac
 
 
+@pytest_asyncio.fixture
+async def noauth_client() -> AsyncIterator[AsyncClient]:
+    """Client whose app runs in AUTH_MODE=none (auto dev admin) for CRUD tests."""
+    s = get_settings().model_copy(update={"auth_mode": "none"})
+    app = create_app(s)
+    app.dependency_overrides[get_settings] = lambda: s
+    async with LifespanManager(app):
+        transport = ASGITransport(app=app)
+        async with AsyncClient(transport=transport, base_url="http://test") as ac:
+            yield ac
+
+
 @pytest.fixture
 def settings() -> Settings:
     return get_settings()

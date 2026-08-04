@@ -1,5 +1,7 @@
 import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
+import { Link, Route, HashRouter as Router, Routes } from "react-router-dom";
 import { apiGet } from "./api/client";
+import Setup from "./pages/Setup";
 
 const queryClient = new QueryClient();
 
@@ -7,27 +9,24 @@ interface PublicConfig {
   environment: string;
   auth_mode: string;
   primary_language_default: string;
-  limits: Record<string, number>;
 }
 
-function HealthPanel() {
+function Home() {
   const { data, error, isLoading } = useQuery({
     queryKey: ["public-config"],
     queryFn: () => apiGet<PublicConfig>("/api/v1/config/public"),
     retry: false,
   });
-
   return (
-    <section style={{ fontFamily: "system-ui", maxWidth: 720, margin: "3rem auto", padding: "0 1rem" }}>
-      <h1 dir="auto">تشخيص المحتوى والفجوات التنافسية</h1>
-      <p dir="auto">Evidence-Based Content Diagnosis &amp; Competitive Gap Analysis — foundation.</p>
+    <section dir="auto" style={{ fontFamily: "system-ui", maxWidth: 720, margin: "3rem auto", padding: "0 1rem" }}>
+      <h1>تشخيص المحتوى والفجوات التنافسية</h1>
+      <p>Evidence-Based Content Diagnosis &amp; Competitive Gap Analysis.</p>
       {isLoading && <p>Connecting to backend…</p>}
-      {error && <p style={{ color: "crimson" }}>Backend not reachable (this is expected until the API runs).</p>}
+      {error && <p style={{ color: "crimson" }}>Backend not reachable (expected until the API runs).</p>}
       {data && (
-        <ul dir="auto">
+        <ul>
           <li>environment: {data.environment}</li>
           <li>auth mode: {data.auth_mode}</li>
-          <li>default language: {data.primary_language_default}</li>
         </ul>
       )}
     </section>
@@ -37,7 +36,16 @@ function HealthPanel() {
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <HealthPanel />
+      <Router>
+        <nav style={{ fontFamily: "system-ui", padding: "1rem", display: "flex", gap: "1rem" }}>
+          <Link to="/">Home</Link>
+          <Link to="/setup">Setup</Link>
+        </nav>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/setup" element={<Setup />} />
+        </Routes>
+      </Router>
     </QueryClientProvider>
   );
 }

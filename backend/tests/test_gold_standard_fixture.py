@@ -104,9 +104,7 @@ def test_evidence_spans_are_verbatim() -> None:
     for cp in FIXTURE["content_pieces"]:
         original = cp["original_text"]
         for span in cp["evidence_spans"]:
-            assert span["quoted_text"] in original, (
-                f"span {span['id']} is not a verbatim substring of {cp['id']}"
-            )
+            assert span["quoted_text"] in original, f"span {span['id']} is not a verbatim substring of {cp['id']}"
             assert span["language_code"] in ENUMS["language_code"]
     # VoC spans must equal the verbatim phrase they capture (Arabic never rewritten).
     voc_by_span = {s["id"]: s["quoted_text"] for s in FIXTURE["voc_evidence_spans"]}

@@ -22,6 +22,4 @@ def created_at_col() -> Mapped[datetime]:
 
 
 def updated_at_col() -> Mapped[datetime]:
-    return mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
-    )
+    return mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)

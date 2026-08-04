@@ -19,9 +19,7 @@ def _canonical() -> dict[str, list[str]]:
 
 def test_enum_group_names_match() -> None:
     canonical = _canonical()
-    assert set(ENUM_REGISTRY.keys()) == set(canonical.keys()), (
-        "Python enum groups differ from docs/schemas/enums.json"
-    )
+    assert set(ENUM_REGISTRY.keys()) == set(canonical.keys()), "Python enum groups differ from docs/schemas/enums.json"
 
 
 def test_each_enum_members_and_order_match() -> None:
