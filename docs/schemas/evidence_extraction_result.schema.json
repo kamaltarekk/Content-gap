@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentdiagnosis.local/schemas/EvidenceExtractionResult.json",
+  "title": "EvidenceExtractionResult",
+  "description": "AI proposes verbatim spans within a supplied content piece. quoted_text must be an exact substring of the piece's original_text; deterministic code re-verifies offsets.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_name", "content_piece_id", "spans", "needs_review"],
+  "properties": {
+    "schema_name": { "const": "EvidenceExtractionResult" },
+    "content_piece_id": { "type": "string", "format": "uuid" },
+    "spans": {
+      "type": "array",
+      "maxItems": 200,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["span_type", "quoted_text", "language_code"],
+        "properties": {
+          "span_type": { "type": "string", "maxLength": 100 },
+          "quoted_text": { "type": "string", "minLength": 1, "maxLength": 4000, "description": "Verbatim substring of original_text. Never translated or rewritten." },
+          "start_offset": { "type": ["integer", "null"], "minimum": 0 },
+          "end_offset": { "type": ["integer", "null"], "minimum": 0 },
+          "language_code": { "enum": ["ar", "en", "ar_en_mixed", "other", "unknown"] }
+        }
+      }
+    },
+    "needs_review": { "type": "boolean" }
+  }
+}

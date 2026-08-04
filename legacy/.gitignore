@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.output/
+.wxt/
+.turbo/
+coverage/
+*.log
+.env
+.env.local
+.DS_Store
+playwright-report/
+test-results/
+pgdata/
+*.tsbuildinfo

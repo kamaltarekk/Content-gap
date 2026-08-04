@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentdiagnosis.local/schemas/GapCandidateExplanation.json",
+  "title": "GapCandidateExplanation",
+  "description": "AI explains a deterministically-detected gap candidate using cited evidence and proposes an alternative explanation. AI never sets gap_status=confirmed; scores/thresholds/status are deterministic + human-gated.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_name", "gap_type", "customer_need", "evidence_ids", "alternative_explanation", "needs_review"],
+  "properties": {
+    "schema_name": { "const": "GapCandidateExplanation" },
+    "gap_type": { "enum": ["missing_coverage", "weak_coverage", "buying_decision_misalignment", "bottleneck_gap", "journey_gap", "micro_decision_gap", "voc_gap", "objection_gap", "sales_element_gap", "claim_proof_gap", "trust_gap", "buying_group_gap", "touchpoint_availability_gap", "format_gap", "depth_gap", "competitor_differentiation_gap", "market_white_space", "performance_gap", "measurement_gap", "content_readiness_gap", "competitive_coverage_gap", "competitive_depth_gap", "competitive_proof_gap", "competitive_journey_gap", "competitive_buying_group_gap", "competitive_format_gap", "competitive_availability_gap", "competitive_language_gap", "competitor_leak_opportunity", "market_saturation", "false_opportunity", "non_content_gap"] },
+    "journey_stage": { "enum": ["trigger", "exploration", "evaluation", "decision", "activation", "experience", "repeat", "growth", "umot", "unknown", "not_applicable"] },
+    "micro_decision_type": { "enum": ["relevance", "understanding", "trust", "price_acceptance", "proof_acceptance", "risk_reduction", "comparison", "logistics_clarity", "timing", "next_step_readiness", "usage_confidence", "repeat_readiness", "referral_readiness", "other", "unknown"] },
+    "buying_group_role": { "enum": ["user", "influencer", "champion", "technical_evaluator", "financial_buyer", "decision_maker", "blocker", "owner_founder", "purchasing_manager", "sales_manager", "merchandising_manager", "business_partner", "parent_caregiver", "individual_buyer", "unknown", "not_applicable"] },
+    "customer_need": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "required_coverage_description": { "type": "string", "maxLength": 2000 },
+    "proposed_root_cause_type": { "enum": ["knowledge_gap", "extraction_gap", "evidence_gap", "coverage_gap", "distribution_gap", "format_gap", "quality_gap", "measurement_gap", "business_gap", "product_gap", "operational_gap", "sales_gap", "unknown"] },
+    "evidence_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "format": "uuid" },
+      "description": "Every id MUST exist in the input manifest. A gap without evidence must instead carry status insufficient_evidence set by deterministic code."
+    },
+    "alternative_explanation": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "missing_evidence": { "type": ["string", "null"], "maxLength": 2000 },
+    "needs_review": { "type": "boolean" }
+  }
+}

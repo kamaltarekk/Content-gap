@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contentdiagnosis.local/schemas/ContentPieceClassificationResult.json",
+  "title": "ContentPieceClassificationResult",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_name", "content_piece_id", "language", "classifications", "needs_review"],
+  "properties": {
+    "schema_name": { "const": "ContentPieceClassificationResult" },
+    "content_piece_id": { "type": "string", "format": "uuid" },
+    "language": { "enum": ["ar", "en", "ar_en_mixed", "other", "unknown"] },
+    "classifications": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "journey_stage": { "$ref": "#/$defs/dimension", "properties": { "value": { "enum": ["trigger", "exploration", "evaluation", "decision", "activation", "experience", "repeat", "growth", "umot", "unknown", "not_applicable"] } } },
+        "content_layer": { "$ref": "#/$defs/dimension", "properties": { "value": { "enum": ["front_end_attention", "back_end_selling", "zmot_availability", "umot_sharing", "unknown", "not_applicable"] } } },
+        "buying_group_role": { "allOf": [{ "$ref": "#/$defs/dimension" }], "properties": { "value": { "enum": ["user", "influencer", "champion", "technical_evaluator", "financial_buyer", "decision_maker", "blocker", "owner_founder", "purchasing_manager", "sales_manager", "merchandising_manager", "business_partner", "parent_caregiver", "individual_buyer", "unknown", "not_applicable"] }, "custom_label": { "type": ["string", "null"] } } },
+        "micro_decision_type": { "$ref": "#/$defs/dimension", "properties": { "value": { "enum": ["relevance", "understanding", "trust", "price_acceptance", "proof_acceptance", "risk_reduction", "comparison", "logistics_clarity", "timing", "next_step_readiness", "usage_confidence", "repeat_readiness", "referral_readiness", "other", "unknown"] } } },
+        "primary_bottleneck": { "$ref": "#/$defs/dimension", "properties": { "value": { "enum": ["attention", "desire", "persuasion", "friction", "unknown"] } } },
+        "primary_sales_element": { "$ref": "#/$defs/dimension", "properties": { "value": { "enum": ["trigger", "claim", "gain", "logistics", "identity", "authority", "social_proof", "claim_proof", "fear_free", "objection_handler", "comparison", "calculation", "reason", "scarcity", "urgency", "reciprocity", "offer"] } } }
+      }
+    },
+    "customer_question": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["text", "confidence", "evidence_ids"],
+      "properties": {
+        "text": { "type": "string", "maxLength": 2000 },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "evidence_ids": { "$ref": "#/$defs/evidence_ids" }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "maxItems": 50,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claim_text", "claim_type", "finding_status", "proof_status", "evidence_ids", "confidence"],
+        "properties": {
+          "claim_text": { "type": "string", "maxLength": 2000 },
+          "claim_type": { "enum": ["functional", "financial", "emotional", "convenience", "quality", "speed", "authority", "risk_reduction", "price", "exclusivity", "status", "logistics", "other"] },
+          "finding_status": { "enum": ["observed_fact", "brand_claim", "inference", "hypothesis", "unknown"] },
+          "proof_status": { "enum": ["proven", "partially_proven", "proof_in_progress", "unsupported", "contradicted", "unverifiable"] },
+          "evidence_ids": { "$ref": "#/$defs/evidence_ids" },
+          "proof_evidence_ids": { "type": "array", "items": { "type": "string", "format": "uuid" } },
+          "confidence": { "$ref": "#/$defs/confidence" }
+        }
+      }
+    },
+    "cta": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["text", "type", "confidence", "evidence_ids"],
+      "properties": {
+        "text": { "type": "string", "maxLength": 500 },
+        "type": { "type": "string", "maxLength": 100 },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "evidence_ids": { "$ref": "#/$defs/evidence_ids" }
+      }
+    },
+    "target_decision_alignment": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["score", "confidence", "evidence_ids"],
+      "properties": {
+        "score": { "type": "integer", "minimum": 0, "maximum": 10 },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "evidence_ids": { "$ref": "#/$defs/evidence_ids" },
+        "reasoning": { "type": "string", "maxLength": 4000 }
+      }
+    },
+    "needs_review": { "type": "boolean" },
+    "review_reasons": { "type": "array", "items": { "type": "string", "maxLength": 100 } }
+  },
+  "$defs": {
+    "confidence": { "enum": ["high", "medium", "low", "insufficient_evidence"] },
+    "evidence_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "format": "uuid" },
+      "description": "Every id MUST exist in the input evidence manifest. Empty array is invalid; the model may not create an objection, role, or claim without pointing to a source span."
+    },
+    "dimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "confidence", "evidence_ids"],
+      "properties": {
+        "value": { "type": "string" },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "evidence_ids": { "$ref": "#/$defs/evidence_ids" },
+        "reasoning": { "type": "string", "maxLength": 4000 },
+        "custom_label": { "type": ["string", "null"] }
+      }
+    }
+  }
+}
